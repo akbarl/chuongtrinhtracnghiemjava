@@ -1,0 +1,25 @@
+package ChuongTrinhTracNghiem;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+
+public class ChuongTrinhTracNghiem extends JFrame implements ActionListener {
+	
+	static JTextField txtCategory, txtQuestion, txtAnswer1, txtAnswer2, txtAnswer3, txtAnswer4;
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

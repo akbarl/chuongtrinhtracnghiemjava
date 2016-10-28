@@ -1,0 +1,12 @@
+package ChuongTrinhTracNghiem;
+
+import javax.swing.JFrame;
+
+public class TracNghiem extends JFrame {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

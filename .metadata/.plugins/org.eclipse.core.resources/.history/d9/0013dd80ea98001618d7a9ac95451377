@@ -1,0 +1,27 @@
+package ChuongTrinhTracNghiem;
+
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class TracNghiem extends JFrame {
+	
+	void createGUI()
+	{
+		this.setSize(300, 100);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setLayout(new GridLayout(2,2,20,20));
+		this.add(new JButton("Mở cửa sổ thêm danh mục"));
+		this.add(new JButton("Mở cửa sổ thêm câu hỏi"));
+		openCategory.addActionListener(this);
+		openQuestion.addActionListener(this);
+		this.setVisible(true);
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

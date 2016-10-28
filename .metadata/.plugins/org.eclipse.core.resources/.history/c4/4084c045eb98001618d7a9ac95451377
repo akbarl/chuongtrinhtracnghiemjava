@@ -1,0 +1,38 @@
+package ChuongTrinhTracNghiem;
+
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
+public class ChuongTrinhTracNghiem extends JFrame implements ActionListener {
+	
+	static JTextField txtCategory, txtQuestion, txtAnswer1, txtAnswer2, txtAnswer3, txtAnswer4;
+	static JRadioButton rdAnswer1, rdAnswer2, rdAnswer3, rdAnswer4;
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	void createGUI()
+	{
+		this.setSize(300, 100);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setLayout(new GridLayout(6,2,20,20));
+		this.add(new JButton("Bắt đầu"));
+		this.add(new JButton("Kết thúc"));
+		this.setVisible(true);
+	}
+	
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

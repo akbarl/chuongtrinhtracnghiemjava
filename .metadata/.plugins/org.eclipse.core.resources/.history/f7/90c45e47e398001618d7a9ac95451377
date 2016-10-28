@@ -1,0 +1,59 @@
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+
+public class test extends JFrame {
+
+	void createGUI()
+	{
+		this.setSize(300, 100);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setLayout(new GridLayout(2,2,20,20));
+		this.add(new JButton("dsadsa"));
+		this.add(new JButton("dsadasd"));
+		JComboBox combo;
+
+		combo.addItem(new Item(1, "Test"));
+		combo.addItem(new Item(15,"Test 2"));
+		this.setVisible(true);
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new test().createGUI();
+	}
+	
+	public class Item {
+
+	    private int id;
+	    private String name;
+
+	    public Item(int id, String name) {
+	        this.id = id;
+	        this.name = name;
+	    }
+
+	    public int getId() {
+	        return id;
+	    }
+
+	    public void setId(int id) {
+	        this.id = id;
+	    }
+
+	    public String getName() {
+	        return name;
+	    }
+
+	    public void setName(String name) {
+	        this.name = name;
+	    }
+
+	    public String toString(){
+	        return this.name;
+	    }
+	}
+
+}

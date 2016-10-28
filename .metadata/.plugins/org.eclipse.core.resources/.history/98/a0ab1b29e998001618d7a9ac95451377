@@ -1,0 +1,197 @@
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.TreeMap;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
+
+
+public class NhapDuLieu extends JFrame implements ActionListener {
+	
+	static JTextField txtCategory, txtQuestion, txtAnswer1, txtAnswer2, txtAnswer3, txtAnswer4;
+	static JButton btnCategory,btnQuestion, openCategory, openQuestion;
+	static JRadioButton rdAnswer1, rdAnswer2, rdAnswer3, rdAnswer4;
+	static JComboBox cbxCategory;
+	TreeMap <String, Integer> categoryMap = new TreeMap<String, Integer>();
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		Database db = new Database();
+		if(arg0.getSource() == btnCategory)
+		{
+			JOptionPane op = new JOptionPane();
+			//op.showMessageDialog(null, "1", "2", JOptionPane.ERROR_MESSAGE);
+			String name = txtCategory.getText();
+			String sql = "INSERT Category(name) VALUES ('"+name+"')";
+			
+			if(db.insertCategory(sql))
+				op.showMessageDialog(null, "Thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+			else
+				op.showMessageDialog(null, "Thất bại", "Thông báo", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		if(arg0.getSource() == btnQuestion)
+		{
+			JOptionPane op = new JOptionPane();
+			String question = txtQuestion.getText();
+			String[] a = new String[4];
+			Boolean[] s = new Boolean[4];
+			if(isSelected() && !isEmpty())
+			{
+				a[0] = txtAnswer1.getText();
+				a[1] = txtAnswer2.getText();
+				a[2] = txtAnswer3.getText();
+				a[3] = txtAnswer4.getText();
+				s[0] = rdAnswer1.isSelected() ? true : false;
+				s[1] = rdAnswer2.isSelected() ? true : false;
+				s[2] = rdAnswer3.isSelected() ? true : false;
+				s[3] = rdAnswer4.isSelected() ? true : false;
+				String sql = "INSERT question(name,category_id) VALUES('"+question+"',1)";
+				String category_name = (String)cbxCategory.getSelectedItem();
+				//int category_id = (int) categoryMap.get(category_name);
+				
+				System.out.print(categoryMap.get(category_name));
+				/*
+				int idofquestion = 0;
+				if(db.insertQuestion(sql))
+				{
+					idofquestion = db.getIDofQuestion(question);
+					for(int i=0;i<a.length;i++)
+					{
+						db.insertAnswer(a[i], idofquestion, s[i]);
+					}
+				}else
+					op.showMessageDialog(null, "Thêm thất bại", "Thông báo", JOptionPane.ERROR_MESSAGE);
+				*/
+				//cbxCategory.addItem(db.getAllCategory().getString("id"));
+			}else
+				System.out.print("chua checked");
+		
+		}
+		if(arg0.getSource() == openCategory)
+		{
+			new NhapDuLieu().insertCategory();
+		}
+		
+		if(arg0.getSource() == openQuestion)
+		{
+			new NhapDuLieu().insertQuestion();
+			ResultSet rs = db.select("SELECT * FROM category");
+			db.fillComboxBox(cbxCategory, rs, categoryMap);
+			//System.out.println("Zara's new balance: " + categoryMap.get("vat ly"));
+		}
+	}
+	
+	void createGUI()
+	{
+		this.setSize(300, 100);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setLayout(new GridLayout(2,2,20,20));
+		this.add(openCategory = new JButton("Mở cửa sổ thêm danh mục"));
+		this.add(openQuestion = new JButton("Mở cửa sổ thêm câu hỏi"));
+		openCategory.addActionListener(this);
+		openQuestion.addActionListener(this);
+		this.setVisible(true);
+	}
+	
+	void insertCategory()
+	{
+		setSize(300, 100);
+		//setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLayout(new GridLayout(2,2,20,20));
+		add(new JLabel("Nhập tên danh mục:"));
+		add(txtCategory = new JTextField());
+		add(btnCategory = new JButton("Thêm"));
+		btnCategory.addActionListener(this);
+		setVisible(true);
+	}
+	
+	void insertQuestion()
+	{
+		setSize(400, 300);
+		//setDefaultCloseOperation(EXIT_ON_CLOSE);
+		ButtonGroup group = new ButtonGroup();
+		group.add(rdAnswer1 = new JRadioButton("Chọn"));
+		group.add(rdAnswer2 = new JRadioButton("Chọn"));
+		group.add(rdAnswer3 = new JRadioButton("Chọn"));
+		group.add(rdAnswer4 = new JRadioButton("Chọn"));
+		
+		setLayout(new GridLayout(7,2,20,20));
+		add(new JLabel("Tên câu hỏi:"));
+		add(txtQuestion = new JTextField());
+		add(new JLabel("Chọn câu đúng"));
+		add(new JLabel("Câu trả lời 1: "));
+		add(txtAnswer1 = new JTextField());
+		add(rdAnswer1);
+		add(new JLabel("Câu trả lời 2: "));
+		add(txtAnswer2 = new JTextField());
+		add(rdAnswer2);
+		add(new JLabel("Câu trả lời 3: "));
+		add(txtAnswer3 = new JTextField());
+		add(rdAnswer3);
+		add(new JLabel("Câu trả lời 4: "));
+		add(txtAnswer4 = new JTextField());
+		add(rdAnswer4);
+		
+		add(btnQuestion = new JButton("Thêm"));
+		add(cbxCategory = new JComboBox());
+		btnQuestion.addActionListener(this);
+		setVisible(true);
+	}
+	
+	void createDatabase()
+	{
+		Database db = new Database();
+		//ResultSet rs = db.select("SELECT * FROM category");
+		String sql = "INSERT INTO Category VALUES(6,'dsadasd')";
+		if(db.insertCategory(sql))
+			System.out.print("OK");
+		else
+			System.out.print("Fail");
+				
+	}
+	
+	public Boolean checkValid(String str)
+	{
+		if(str != null && !str.isEmpty())
+			return true;
+		else
+			return false;
+	}
+	
+	public Boolean isEmpty()
+	{
+		//if(str != null && !str.isEmpty())
+		if(txtQuestion.getText().equals("") || txtAnswer1.getText().equals("") || txtAnswer2.getText().equals("") || txtAnswer3.getText().equals("") || txtAnswer4.getText().equals(""))
+			return true;
+		else
+			return false;
+	}
+	
+	public Boolean isSelected()
+	{
+		if(rdAnswer1.isSelected() || rdAnswer2.isSelected() || rdAnswer3.isSelected() || rdAnswer4.isSelected())
+		{
+			return true;
+		}else
+			return false;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new NhapDuLieu().createGUI();
+		//new NhapDuLieu().createDatabase();
+		
+	}
+
+}

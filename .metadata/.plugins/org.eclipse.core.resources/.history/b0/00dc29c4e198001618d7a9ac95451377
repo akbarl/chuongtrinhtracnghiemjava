@@ -1,0 +1,42 @@
+import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class test extends JFrame {
+JComboBox combo;
+
+public Main() {
+Option[] options = new Option[]{new Option(1, "test"), new Option(2, "test2")};
+combo = new JComboBox(options);
+combo.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent e) {
+System.out.println("id selected: " + ((Option)combo.getSelectedItem()).id);
+}
+
+});
+this.getContentPane().add(combo);
+this.setSize(200, 64);
+
+}
+
+public static void main(String[] args) {
+test m = new test();
+m.show();
+}
+
+public class Option {
+public Option(int id, String value) {
+this.id = id;
+this.value = value;
+}
+
+public int id;
+public String value;
+
+public String toString() {
+return value;
+}
+
+}
+
+}
